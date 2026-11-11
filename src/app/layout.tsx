@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
+import { CartProvider } from "@/context/CartContext";
+import Navigation from "@/components/Navigation";
+import CartDrawer  from "@/components/CartDrawer";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -18,13 +21,20 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Stillness Bee Honey — The Art of Golden Living",
+  title: "Stillness Bee Honey — Premium Bulgarian Honey",
   description:
-    "Extraordinary honey for everyday rituals. Nature's gold, refined.",
-  keywords: ["luxury honey", "premium honey", "artisan honey", "Stillness Bee Honey"],
+    "Discover the golden richness of premium honey imported from Bulgaria. Carefully sourced, naturally exquisite, and crafted for those who appreciate the finest gifts of nature.",
+  keywords: [
+    "Bulgarian honey",
+    "premium honey",
+    "luxury honey",
+    "raw honey",
+    "Stillness Bee Honey",
+    "imported honey",
+  ],
   openGraph: {
-    title: "Stillness Bee Honey — The Art of Golden Living",
-    description: "Extraordinary honey for everyday rituals.",
+    title: "Stillness Bee Honey — Premium Bulgarian Honey",
+    description: "Premium honey imported from Bulgaria. Naturally exceptional.",
     type: "website",
   },
 };
@@ -36,7 +46,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
-      <body className="bg-obsidian text-ivory antialiased">{children}</body>
+      <body className="bg-obsidian text-ivory antialiased">
+        <CartProvider>
+          <Navigation />
+          {children}
+          <CartDrawer />
+        </CartProvider>
+      </body>
     </html>
   );
 }

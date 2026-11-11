@@ -8,39 +8,47 @@ export default function Collection() {
   const { ref: headerRef, isVisible: headerVisible } =
     useScrollReveal<HTMLDivElement>({ threshold: 0.2 });
 
-  const { ref: gridRef, isVisible: gridVisible } =
-    useScrollReveal<HTMLDivElement>({ threshold: 0.05, rootMargin: "0px 0px -40px 0px" });
+  const { ref: p1Ref, isVisible: p1Visible } =
+    useScrollReveal<HTMLDivElement>({ threshold: 0.1, rootMargin: "0px 0px -60px 0px" });
+
+  const { ref: p2Ref, isVisible: p2Visible } =
+    useScrollReveal<HTMLDivElement>({ threshold: 0.1, rootMargin: "0px 0px -60px 0px" });
+
+  const productRefs = [p1Ref, p2Ref];
+  const productVisibles = [p1Visible, p2Visible];
 
   return (
     <section
       id="collection"
-      className="relative bg-obsidian py-24 lg:py-32 overflow-hidden"
+      className="relative bg-obsidian overflow-hidden"
       aria-labelledby="collection-heading"
     >
-      {/* Subtle centre glow */}
+      {/* Subtle centre glow at top */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(199,162,98,0.06) 0%, transparent 70%)",
+            "radial-gradient(ellipse 60% 35% at 50% 0%, rgba(199,162,98,0.05) 0%, transparent 70%)",
         }}
       />
 
-      {/* Top ornamental divider */}
-      <div className="flex items-center justify-center gap-6 mb-16">
-        <div className="h-px flex-1 max-w-[120px] bg-gradient-to-r from-transparent to-gold/30" />
-        <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 opacity-50">
-          <polygon
-            points="12,1 15,9 23,9 17,14 19.5,22 12,17 4.5,22 7,14 1,9 9,9"
-            fill="none"
-            stroke="#C7A262"
-            strokeWidth="1"
-          />
-        </svg>
-        <div className="h-px flex-1 max-w-[120px] bg-gradient-to-l from-transparent to-gold/30" />
+      {/* ── Ornamental divider ── */}
+      <div
+        className="flex items-center justify-center gap-5 pt-24 mb-16"
+        aria-hidden
+      >
+        <div className="h-px flex-1 max-w-[100px] bg-gradient-to-r from-transparent to-gold/22" />
+        <div className="flex items-center gap-1.5">
+          <div className="w-1 h-1 rounded-full bg-gold/32" />
+          <div className="w-5 h-px bg-gold/22" />
+          <div className="w-1.5 h-1.5 rounded-full bg-gold/50" />
+          <div className="w-5 h-px bg-gold/22" />
+          <div className="w-1 h-1 rounded-full bg-gold/32" />
+        </div>
+        <div className="h-px flex-1 max-w-[100px] bg-gradient-to-l from-transparent to-gold/22" />
       </div>
 
-      {/* Section header */}
+      {/* ── Section header ── */}
       <div
         ref={headerRef}
         className={`max-w-3xl mx-auto text-center px-6 mb-20 transition-all duration-1000 ease-out ${
@@ -49,14 +57,14 @@ export default function Collection() {
             : "opacity-0 translate-y-10"
         }`}
       >
-        <p className="font-inter text-[10px] tracking-[0.35em] text-gold/65 uppercase mb-5">
+        <p className="font-inter text-[9px] tracking-[0.38em] text-gold/58 uppercase mb-5">
           The Collection
         </p>
         <h2
           id="collection-heading"
-          className="font-cormorant font-light text-[clamp(2.4rem,5vw,4rem)] text-ivory leading-[1.05] mb-6"
+          className="font-cormorant font-light text-[clamp(2.4rem,5vw,4.2rem)] text-ivory leading-[1.05] mb-6"
         >
-          Two Origins.{" "}
+          Two Expressions.{" "}
           <span
             className="italic"
             style={{
@@ -69,36 +77,35 @@ export default function Collection() {
               animation: "shimmer 4s linear infinite",
             }}
           >
-            One Golden Standard.
+            One Pure Origin.
           </span>
         </h2>
-        <p className="font-cormorant italic text-lg text-ivory/50 leading-relaxed max-w-xl mx-auto">
-          Discover two extraordinary expressions of nature&apos;s finest golden
-          treasure.
+        <p className="font-cormorant italic text-[1.05rem] text-ivory/44 leading-relaxed max-w-xl mx-auto">
+          Both honeys are imported directly from Bulgaria — a land celebrated
+          for centuries of beekeeping mastery and breathtaking natural
+          landscapes.
         </p>
       </div>
 
-      {/* Product grid */}
-      <div
-        ref={gridRef}
-        className="max-w-6xl mx-auto px-6 lg:px-12 grid md:grid-cols-2 gap-px bg-gold/10"
-      >
+      {/* ── Editorial alternating product rows ── */}
+      <div className="flex flex-col">
         {products.map((product, i) => (
-          <div key={product.id} className="bg-obsidian">
+          <div key={product.id} ref={productRefs[i]}>
             <ProductCard
               product={product}
-              isVisible={gridVisible}
-              delay={i * 180}
+              isVisible={productVisibles[i]}
+              delay={0}
+              reverse={i % 2 !== 0}
             />
           </div>
         ))}
       </div>
 
-      {/* Bottom ornamental divider */}
-      <div className="flex items-center justify-center gap-6 mt-16">
-        <div className="h-px flex-1 max-w-[120px] bg-gradient-to-r from-transparent to-gold/20" />
-        <div className="w-1 h-1 rounded-full bg-gold/40" />
-        <div className="h-px flex-1 max-w-[120px] bg-gradient-to-l from-transparent to-gold/20" />
+      {/* ── Bottom ornamental divider ── */}
+      <div className="flex items-center justify-center gap-6 py-20">
+        <div className="h-px flex-1 max-w-[120px] bg-gradient-to-r from-transparent to-gold/18" />
+        <div className="w-1 h-1 rounded-full bg-gold/38" />
+        <div className="h-px flex-1 max-w-[120px] bg-gradient-to-l from-transparent to-gold/18" />
       </div>
     </section>
   );

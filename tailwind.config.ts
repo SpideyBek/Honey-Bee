@@ -38,12 +38,17 @@ const config: Config = {
           "0%, 100%": { opacity: "0.6" },
           "50%": { opacity: "1" },
         },
+        marquee: {
+          "0%":   { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         fadeInUp: "fadeInUp 0.9s ease forwards",
         fadeIn: "fadeIn 1.2s ease forwards",
         shimmer: "shimmer 3s linear infinite",
         subtlePulse: "subtlePulse 3s ease-in-out infinite",
+        marquee: "marquee 28s linear infinite",
       },
     },
   },
